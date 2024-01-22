@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:Layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <title>Thymeleaf Layout</title>
+  <!-- CSS only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <!-- JavaScript Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+</head>
+<body>
+<!-- Headder Fragment 사용 -->
+<th:block th:replace="fragments/header::header"></th:block>
+<!-- Content Fragment 사용 -->
+<th:block layout:fragment="content"></th:block>
+
+<form action="/members/new" role="form" method="post"
+      th:object="${memberFormDto}">
+  <div class="form-group">
+    <label th:for="name">이름</label>
+    <input type="text" th:field="*{name}" class="form-control"
+    placeholder="이름을 입력해주세요">
+    <p th:if="${#fields.hasErrors('name')}"
+       th:errors="*{name}" class="fieldError">Incorrect data</p>
+  </div>
+  <div class="form-group">
+    <label th:for="email">이메일주소</label>
+    <input type="email" th:field="*{email}" class="form-control"
+           placeholder="이메일을 입력해주세요">
+    <p th:if="${#fields.hasErrors('email')}"
+       th:errors="*{email}" class="fieldError">Incorrect data</p>
+  </div>
+  <div class="form-group">
+    <label th:for="password">비밀번호</label>
+    <input type="password" th:field="*{password}" class="form-control"
+           placeholder="비밀번호를 입력해주세요">
+    <p th:if="${#fields.hasErrors('password')}"
+       th:errors="*{password}" class="fieldError">Incorrect data</p>
+  </div>
+  <div class="form-group">
+    <label th:for="address">주소</label>
+    <input type="text" th:field="*{address}" class="form-control"
+           placeholder="주소를 입력해주세요">
+    <p th:if="${#fields.hasErrors('address')}"
+       th:errors="*{address}" class="fieldError">Incorrect data</p>
+  </div>
+  <div style="text-align: center">
+    <button type="submit" class="btn btn-primary" style="">Submit
+    </button>
+  </div>
+  <input type="hidden">
+  <!-- 스프링시큐리티를 사용할 경우 기본적으로 csrf를 방어하기 위해 모든 POST 방식의 데이터 전송에 POST값 필요 -->
+  <!-- csrf란 사이트간 위조 요청으로 사용자가 자신의 의지와 상관없이 해커가 의도한 대로 수정,등록,삭제 등의 행위를 웹사이트 요청하게 하는 공격 -->
+</form>
+<!-- Footer Fragment 사용 -->
+<th:block th:replace="fragments/footer::footer"></th:block>
+</body>
+</html>
